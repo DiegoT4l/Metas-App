@@ -1,0 +1,18 @@
+.header {
+    @apply h-xl flex justify-between shadow bg-white text-gray-700;
+}
+.container {
+    @apply flex items-center pl-4;
+}
+.logo {
+    @apply w-10 h-10 mr-2;
+}
+.title {
+    @apply text-lg font-semibold text-gray-900 uppercase;
+}
+.links {
+    @apply flex items-center px-4 h-xl hover:bg-gray-200;
+}
+.icon {
+    @apply w-6 h-6;
+}

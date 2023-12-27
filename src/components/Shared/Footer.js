@@ -1,6 +1,8 @@
+import './Footer.css';
+
 function Footer() {
     return (
-        <footer>
+        <footer className="footer">
             <small>Desarrollado y diseñado por DiegoT4l. &copy;2023. Todos los derechos reservados.</small>
         </footer>
     );

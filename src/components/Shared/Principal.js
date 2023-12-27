@@ -1,14 +1,16 @@
+import './Principal.css';
+
 function Principal({ children }) {
     return (
-        <>
-            <sidenav>
+        <div className='principal'>
+            <aside className='aside'>
                 <a href="/lista">Lista</a>
                 <a href="/crear">Crear</a>
-            </sidenav>
-            <main>
+            </aside>
+            <main className='main'>
                 {children}
             </main>
-        </>
+        </div>
     );
 }
 
