@@ -2,9 +2,9 @@ import styles from './Links.module.css';
 
 function Link({ text, Icon, href }) {
     return (
-        <a href={href} className="link">
+        <a href={href} className={styles.link}>
             <Icon className={styles.icon} />
-            <span className="text">{text}</span>
+            { text && <span className={styles.text}>{text}</span> }
         </a>
     );
 }

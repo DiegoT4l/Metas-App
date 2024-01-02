@@ -5,14 +5,19 @@ import { ReactComponent as NewIcon } from '../../img/new.svg';
 
 function Principal({ children }) {
     return (
-        <div className={styles.Principalrincipal}>
+        <div className={styles.principal}>
             <aside className={styles.aside}>
-                <Link href='/list' text='Lista de Metas'>
-                    <ListIcon className='icon' />
-                </Link>
-                <Link href='/create' text='Nueva Meta'>
-                    <NewIcon className='icon'/>
-                </Link>
+                <Link 
+                href='/list' 
+                text='Lista de Metas'
+                Icon={ListIcon}
+                />
+
+                <Link 
+                href='/create' 
+                text='Nueva Meta'
+                Icon={NewIcon}
+                />
             </aside>
             <main className='main'>
                 {children}
