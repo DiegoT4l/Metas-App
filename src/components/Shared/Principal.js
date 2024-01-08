@@ -19,7 +19,7 @@ function Principal({ children }) {
                 Icon={NewIcon}
                 />
             </aside>
-            <main className='main'>
+            <main className={styles.main}>
                 {children}
             </main>
         </div>

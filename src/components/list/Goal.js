@@ -1,19 +1,22 @@
-function Goal() {
-    return ( 
-        <div>
-            <div>
-                <div>icono</div>
-                <p>1<sub>/ semana</sub></p>
-                <p>Detalles</p>
+import styles from './Goal.module.css';
+
+function Goal({ details, period, icon, frequency, finish, completed }) {
+
+    return (
+        <div className={styles.goal + ' card'}>
+            <div className='flex items-center'>
+                <div className={styles.icon}>{icon}</div>
+                <p className="text-xl ml-5 mr-10">{frequency}<sub className='text-xs text-gray-500 ml-1'>/ {period}</sub></p>
+                <p>{details}</p>
             </div>
-            <div>
-                <div>
-                    <p>4 de 5</p>
-                    <div>
-                        <div></div>
+            <div className='flex'>
+                <div className='relative m-2 mx-5'>
+                    <p className='text-center'>{completed} de {finish}</p>
+                    <div className={styles.bar1}>
+                        <div className={styles.bar2} style={{ width: `${Math.round((completed / finish) * 100)}%` }}></div>
                     </div>
                 </div>
-                <button>Completado</button>
+                <button className='button button--gray'>Completado</button>
             </div>
         </div>
     );
