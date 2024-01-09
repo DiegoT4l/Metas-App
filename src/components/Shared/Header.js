@@ -1,7 +1,7 @@
 import styles from './Header.module.css';
 import { ReactComponent as LogoIcon } from '../../img/logo.svg';
 import { ReactComponent as ProfileIcon } from '../../img/profile.svg';
-import Link from './Link';
+import Peg from './Peg';
 
 function Header() {
     return (
@@ -12,8 +12,8 @@ function Header() {
             </div>
 
             <nav>
-                <Link
-                    href='/Perfil'
+                <Peg
+                    to='/Perfil'
                     className={styles.link}
                     Icon={ProfileIcon}
                 />

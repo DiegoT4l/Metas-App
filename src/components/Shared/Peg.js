@@ -1,12 +1,13 @@
 import styles from './Links.module.css';
+import {Link} from "react-router-dom";
 
-function Link({ text, Icon, href }) {
+function Peg({ text, Icon, to }) {
     return (
-        <a href={href} className={styles.link}>
+        <Link to={to} className={styles.link}>
             <Icon className={styles.icon} />
             { text && <span className={styles.text}>{text}</span> }
-        </a>
+        </Link>
     );
 }
 
-export default Link;
+export default Peg;

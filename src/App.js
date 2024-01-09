@@ -1,21 +1,21 @@
 import './App.css';
-import Footer from './components/Shared/Footer';
-import Header from './components/Shared/Header';
-import Principal from './components/Shared/Principal';
-import List from './components/list/List';
+import Layout from "./components/Shared/Layout";
+import {Route, Routes} from "react-router-dom";
+import List from "./components/list/List";
 import Details from "./components/new/Details";
+import NotFound from "./components/Shared/NotFound";
 
 function App() {
-  return (
-    <div className="App">
-      <Header />
-      <Principal>
-          {/* <List /> */}
-          <Details />
-      </Principal>
-      <Footer />
-    </div>
-  );
+    return (
+        <Routes>
+            <Route path='/' element={<Layout />}>
+                <Route index element={<List />}/>
+                <Route path='/list' element={<List />}/>
+                <Route path='/create' element={<Details />}/>
+            </Route>
+            <Route path='*' element={<NotFound/>}/>
+        </Routes>
+    );
 }
 
 export default App;
