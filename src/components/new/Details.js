@@ -1,37 +1,48 @@
 import styles from './Details.module.css';
-import { useState } from 'react';
+import {useContext, useEffect, useState} from 'react';
+import {Context} from "../../services/Memory";
+import {useNavigate} from "react-router-dom";
 
 function Details() {
 
     const [form, setForm] = useState({
         details: '',
-        events: 1,
-        frequency: 'semana',
+        frequency: 1,
+        period: 'semana',
         icon: '🏃‍♂️',
-        goal: 52,
+        finish: 52,
         limitDate: '2030-12-31',
         completed: 0
     });
 
     const {
         details,
-        events,
+        period,
         frequency,
         icon,
-        goal,
+        finish,
         limitDate,
         completed
     } = form;
 
-    const onchange = (e, prop) => {
+    const onChange = (e, prop) => {
         setForm(estate => ({
             ...estate,
             [prop]: e.target.value
         }))
     }
 
-    const createButton = async () => {
-        console.log('[MetasAPP]: Formulario creado con éxito.\n', form);
+    const [state, dispatch] = useContext(Context);
+
+    useEffect(() => {
+        //console.log(form);
+    }, [form]);
+
+    const navigate = useNavigate();
+
+    const createGoal = async () => {
+        dispatch({ type : 'CREATE_GOAL', goal: form });
+        navigate('/list');
     }
 
     const frequencyFunction = ['día', 'semana', 'mes', 'año'];
@@ -47,7 +58,7 @@ function Details() {
                         value={details}
                         placeholder='Ej. 52 caminatas'
                         type='text'
-                        onChange={(e) => {onchange(e, 'details')}}
+                        onChange={e => onChange(e, 'details')}
                     />
                 </label>
                 <label className='label'>
@@ -55,17 +66,17 @@ function Details() {
                     <div className='flex mb-6'>
                         <input
                             className='input mr-6'
-                            value={events} type='number'
+                            value={frequency} type='number'
                             placeholder='1'
-                            onChange={(e) => {onchange(e, 'events')}}
+                            onChange={e => onChange(e, 'frequency')}
                         />
                         <select
                             className='input'
-                            value={frequency}
-                            onChange={(e) => {onchange(e, 'frequency')}}
+                            value={period}
+                            onChange={(e) => {onChange(e, 'period')}}
                         >
-                            {frequencyFunction.map((frequency) => {
-                                return <option key={frequency} value={frequency}>{frequency}</option>
+                            {frequencyFunction.map((period) => {
+                                return <option key={period} value={period}>{period}</option>
                             })}
                         </select>
                     </div>
@@ -74,10 +85,10 @@ function Details() {
                     ¿Cuantas veces deseas completar esta meta?
                     <input
                         className='input'
-                        value={goal}
+                        value={finish}
                         type='number'
                         placeholder='52'
-                        onChange={(e) => {onchange(e, 'goal')}}
+                        onChange={(e) => {onChange(e, 'finish')}}
                     />
                 </label>
                 <label className='label'>
@@ -86,7 +97,7 @@ function Details() {
                         className='input'
                         value={limitDate}
                         type='date'
-                        onChange={(e) => {onchange(e, 'limitDate')}}
+                        onChange={(e) => {onChange(e, 'limitDate')}}
                     />
                 </label>
                 <label className='label'>
@@ -95,7 +106,7 @@ function Details() {
                         className='input'
                         type='number'
                         value={completed}
-                        onChange={(e) => {onchange(e, 'completed')}}
+                        onChange={(e) => {onChange(e, 'completed')}}
                     />
                 </label>
                 <label className='label'>
@@ -103,7 +114,7 @@ function Details() {
                     <select
                         className='input'
                         value={icon}
-                        onChange={(e) => {onchange(e, 'icon')}}
+                        onChange={(e) => {onChange(e, 'icon')}}
                     >
                         {icons.map((icon) => {
                             return <option key={icon} value={icon}>{icon}</option>
@@ -114,7 +125,7 @@ function Details() {
             <div className={styles.buttons}>
                 <button
                     className='button button--black'
-                    onClick={createButton}
+                    onClick={createGoal}
                 >Guardar
                 </button>
                 <button className='button button--gray'>Cancelar</button>
