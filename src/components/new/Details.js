@@ -3,6 +3,7 @@ import {useContext, useEffect, useState} from 'react';
 import {Context} from "../../services/Memory";
 import {useNavigate, useParams} from "react-router-dom";
 
+
 function Details() {
 
     const {id} = useParams();
@@ -30,8 +31,8 @@ function Details() {
     const [state, dispatch] = useContext(Context);
 
     const onChange = (e, prop) => {
-        setForm(estate => ({
-            ...estate,
+        setForm(prevEstate => ({
+            ...prevEstate,
             [prop]: e.target.value
         }))
     }
@@ -43,7 +44,7 @@ function Details() {
 
         if (!id) return;
         if (!goalMemory) {
-            return navigate('/notFound');
+            return navigate('/list');
         }
         setForm(goalMemory);
     }, [id, state.objects, navigate]);
@@ -139,7 +140,7 @@ function Details() {
                         onChange={(e) => {onChange(e, 'icon')}}
                     >
                         {icons.map((icon) => {
-                            return <option key={icon} value={icon}>{icon}</option>
+                            return <option key={icon} /*value={icon}*/>{icon}</option>
                         })}
                     </select>
                 </label>

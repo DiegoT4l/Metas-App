@@ -1,6 +1,7 @@
 import styles from './Goal.module.css';
 import {Link} from "react-router-dom";
 
+
 function Goal({ id, details, period, icon, frequency, finish, completed }) {
 
     return (
