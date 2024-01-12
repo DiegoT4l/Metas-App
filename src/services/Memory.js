@@ -80,6 +80,22 @@ const reducer = (state, action) => {
                 }
             }
         }
+        case 'UPDATE_GOAL': {
+            const id = action.goal.id;
+            state.objects[id] = {
+                ...state.objects[id],
+                ...action.goal
+            }
+            return { ...state, objects: { ...state.objects }}
+        }
+        case 'DELETE_GOAL': {
+            const id = action.id;
+            delete state.objects[id];
+            return {
+                orderList: state.orderList.filter((goalId) => goalId !== id),
+                objects: { ...state.objects }
+            }
+        }
         default:
             return console.log('No se encontró el tipo de acción');
     }

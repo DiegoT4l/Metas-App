@@ -26,3 +26,6 @@ yarn-error.log*
 package-lock.json
 pnpm-lock.yaml
 shrinkwrap.yaml
+
+# IDEs
+.idea

@@ -1,9 +1,11 @@
 import styles from './Details.module.css';
 import {useContext, useEffect, useState} from 'react';
 import {Context} from "../../services/Memory";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 function Details() {
+
+    const {id} = useParams();
 
     const [form, setForm] = useState({
         details: '',
@@ -25,6 +27,8 @@ function Details() {
         completed
     } = form;
 
+    const [state, dispatch] = useContext(Context);
+
     const onChange = (e, prop) => {
         setForm(estate => ({
             ...estate,
@@ -32,17 +36,35 @@ function Details() {
         }))
     }
 
-    const [state, dispatch] = useContext(Context);
-
-    useEffect(() => {
-        //console.log(form);
-    }, [form]);
-
     const navigate = useNavigate();
 
-    const createGoal = async () => {
+    useEffect(() => {
+        const goalMemory = state.objects[id];
+
+        if (!id) return;
+        if (!goalMemory) {
+            return navigate('/notFound');
+        }
+        setForm(goalMemory);
+    }, [id, state.objects, navigate]);
+
+    const createGoal = () => {
         dispatch({ type : 'CREATE_GOAL', goal: form });
         navigate('/list');
+    }
+
+    const updateGoal = () => {
+        dispatch({ type : 'UPDATE_GOAL', goal: form });
+        navigate('/list');
+    }
+
+    const deleteGoal = () => {
+        dispatch({ type : 'DELETE_GOAL', id });
+        navigate('/list');
+    }
+
+    const closeModal = () => {
+        navigate('/list')
     }
 
     const frequencyFunction = ['día', 'semana', 'mes', 'año'];
@@ -123,12 +145,26 @@ function Details() {
                 </label>
             </form>
             <div className={styles.buttons}>
-                <button
+                {!id && <button
                     className='button button--black'
                     onClick={createGoal}
                 >Guardar
+                </button>}
+                {id && <button
+                    className='button button--black'
+                    onClick={updateGoal}
+                >Actualizar
+                </button>}
+                {id && <button
+                    className='button button--red'
+                    onClick={deleteGoal}
+                >Borrar
+                </button>}
+                <button
+                    className='button button--gray'
+                    onClick={closeModal}
+                >Cancelar
                 </button>
-                <button className='button button--gray'>Cancelar</button>
             </div>
         </div>
     );
