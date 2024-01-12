@@ -89,7 +89,7 @@ const reducer = (state, action) => {
             return { ...state, objects: { ...state.objects }}
         }
         case 'DELETE_GOAL': {
-            const id = action.id;
+            const id = action.goal.id;
             delete state.objects[id];
             return {
                 orderList: state.orderList.filter((goalId) => goalId !== id),

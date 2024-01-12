@@ -59,7 +59,7 @@ function Details() {
     }
 
     const deleteGoal = () => {
-        dispatch({ type : 'DELETE_GOAL', id });
+        dispatch({ type : 'DELETE_GOAL', goal: form });
         navigate('/list');
     }
 
