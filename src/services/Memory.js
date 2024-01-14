@@ -1,59 +1,10 @@
 import {createContext, useReducer} from "react";
 
-const goalsMock = [
-    {
-        'id': 1,
-        'details': 'Hacer ejercicio por 30min',
-        'period': 'día',
-        'frequency': 1,
-        'icon': '🏃‍♂️',
-        'finish': 365,
-        'due-date': '2021-12-31',
-        'completed': 5
-    },
-    {
-        'id': 2,
-        'details': 'Leer 30 páginas',
-        'period': 'día',
-        'frequency': 1,
-        'icon': '📚',
-        'finish': 365,
-        'due-date': '2021-12-31',
-        'completed': 5
-    },
-    {
-        'id': 3,
-        'details': 'Comer 2 porciones de fruta',
-        'period': 'día',
-        'frequency': 1,
-        'icon': '🍎',
-        'finish': 365,
-        'due-date': '2021-12-31',
-        'completed': 5
-    },
-    {
-        'id': 4,
-        'details': 'No comer carne',
-        'period': 'día',
-        'frequency': 1,
-        'icon': '🥦',
-        'finish': 365,
-        'due-date': '2021-12-31',
-        'completed': 5
-    },
-    {
-        'id': 5,
-        'details': 'No tomar alcohol',
-        'period': 'día',
-        'frequency': 1,
-        'icon': '🚫',
-        'finish': 365,
-        'due-date': '2021-12-31',
-        'completed': 5
-    },
-];
 
-const InitialState = {
+const memory = localStorage.getItem('goals');
+const InitialState = memory ?
+    JSON.parse(memory) :
+    {
     orderList: [],
     objects: {},
 }
@@ -61,18 +12,36 @@ const InitialState = {
 const reducer = (state, action) => {
     switch (action.type) {
         case 'LOAD_GOALS': {
-            const goals = action.goals;
-            return {
+            const goals = action.goal || []; // <--- Si no hay goals, se crea un array vacío.
+            const newState = {
                 orderList: goals.map((goal) => goal.id),
                 objects: goals.reduce((obj, goal) => {
                     obj[goal.id] = goal;
                     return obj;
                 }, {})
-            };
+            }
+            localStorage.setItem('goals', JSON.stringify(newState));
+            return newState;
         }
         case 'CREATE_GOAL': {
-            const id = Math.random();
-            return {
+
+            function generateId(min, max) {
+                const numbers = [];
+                for (let i = min; i <= max; i++) {
+                    numbers.push(i);
+                } // <--- Array con números del 1 al 100000
+
+                // Algoritmo de Fisher-Yates para desordenar el array.
+                for (let i = numbers.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+                }
+
+                return numbers[0]; // <--- Devuelve un número aleatorio del 1 al 100000
+            }
+
+            const id = generateId(1, 100000);
+            const newState = {
                 orderList: [...state.orderList, id],
                 objects: {
                     ...state.objects,
@@ -82,6 +51,8 @@ const reducer = (state, action) => {
                     }
                 }
             }
+            localStorage.setItem('goals', JSON.stringify(newState));
+            return newState;
         }
         case 'UPDATE_GOAL': {
             const id = action.goal.id;
@@ -89,32 +60,36 @@ const reducer = (state, action) => {
                 ...state.objects[id],
                 ...action.goal
             }
-            return { ...state, objects: { ...state.objects }}
+            const newState = { ...state };
+            localStorage.setItem('goals', JSON.stringify(newState));
+            return newState;
         }
         case 'DELETE_GOAL': {
             const id = action.goal.id;
             const newOrder = state.orderList.filter((goalId) => goalId !== id);
             delete state.objects[id];
-            return {
+            const newState = {
                 orderList: newOrder,
                 objects: { ...state.objects }
             }
+            localStorage.setItem('goals', JSON.stringify(newState));
+            return newState;
         }
         default:
-            return console.log('No se encontró el tipo de acción');
+            throw new Error('Action not found');
     }
 }
 
-const goals = reducer(InitialState, {
-    type: 'LOAD_GOALS',
-    goals: goalsMock
-});
+// reducer(InitialState, {
+//     type: 'LOAD_GOALS',
+//     goals: goalsMock
+// });
 
 export const Context = createContext(null);
 
 function Memory({ children }) {
 
-    const [estate, dispatch] = useReducer(reducer, goals)
+    const [estate, dispatch] = useReducer(reducer, InitialState)
 
 
     return (

@@ -5,7 +5,7 @@ import { Context } from "../../services/Memory";
 
 
 function List() {
-    const [state, dispatch] = useContext(Context);
+    const [state] = useContext(Context);
 
     return (
         <>

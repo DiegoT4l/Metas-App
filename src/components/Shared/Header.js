@@ -14,7 +14,6 @@ function Header() {
             <nav>
                 <Peg
                     to='/Perfil'
-                    className={styles.link}
                     Icon={ProfileIcon}
                 />
             </nav>
