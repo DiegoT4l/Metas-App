@@ -2,11 +2,12 @@ import styles from './Details.module.css';
 import {useContext, useEffect, useState} from 'react';
 import {Context} from "../../services/Memory";
 import {useNavigate, useParams} from "react-router-dom";
+import {createGoal, deleteGoal, updateGoal} from "../../services/Requests";
 
 
 function Details() {
 
-    const {id} = useParams();
+    const {id} = useParams(); // <--- Obtiene el id de la url si existe
 
     const [form, setForm] = useState({
         details: '',
@@ -28,7 +29,7 @@ function Details() {
         completed
     } = form;
 
-    const [state, dispatch] = useContext(Context);
+    const [state, dispatch] = useContext(Context); // <--- Obtiene el estado global y el dispatch del contexto
 
     const onChange = (e, prop) => {
         setForm(prevEstate => ({
@@ -38,7 +39,7 @@ function Details() {
     }
 
     const navigate = useNavigate();
-    const goalMemory = state.objects[id];
+    const goalMemory = state.objects[id]; // <--- Obtiene el objeto de la memoria
 
     useEffect(() => {
         if (!id) return;
@@ -48,18 +49,21 @@ function Details() {
         setForm(goalMemory);
     }, [id, goalMemory, navigate]);
 
-    const createGoal = () => {
-        dispatch({ type : 'CREATE_GOAL', goal: form });
+    const create = async () => {
+        const newGoal = await createGoal();
+        dispatch({ type : 'CREATE_GOAL', goal: newGoal });
         navigate('/list');
     }
 
-    const updateGoal = () => {
-        dispatch({ type : 'UPDATE_GOAL', goal: form });
+    const update = async () => {
+        const updatedGoal = await updateGoal();
+        dispatch({ type : 'UPDATE_GOAL', goal: updatedGoal });
         navigate('/list');
     }
 
-    const deleteGoal = () => {
-        dispatch({ type : 'DELETE_GOAL', goal: form });
+    const deleteG = async () => {
+        const idDeleted = await deleteGoal();
+        dispatch({ type : 'DELETE_GOAL', goal: idDeleted });
         navigate('/list');
     }
 
@@ -147,17 +151,17 @@ function Details() {
             <div className={styles.buttons}>
                 {!id && <button
                     className='button button--black'
-                    onClick={createGoal}
+                    onClick={create}
                 >Guardar
                 </button>}
                 {id && <button
                     className='button button--black'
-                    onClick={updateGoal}
+                    onClick={update}
                 >Actualizar
                 </button>}
                 {id && <button
                     className='button button--red'
-                    onClick={deleteGoal}
+                    onClick={deleteG}
                 >Borrar
                 </button>}
                 <button

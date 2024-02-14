@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "details": "Correr por 30 minutos",
+        "frequency": 1,
+        "period": "día",
+        "icon": "🏃‍♂️",
+        "finish": 52,
+        "limitDate": "2030-12-31",
+        "completed": 5
+    },
+    {
+        "id": 2,
+        "details": "Leer 30 minutos",
+        "frequency": 1,
+        "period": "día",
+        "icon": "📚",
+        "finish": 52,
+        "limitDate": "2030-12-31",
+        "completed": 5
+    },
+    {
+        "id": 3,
+        "details": "Hacer 30 minutos de meditación",
+        "frequency": 1,
+        "period": "día",
+        "icon": "🧘‍♂️",
+        "finish": 52,
+        "limitDate": "2030-12-31",
+        "completed": 5
+    },
+    {
+        "id": 4,
+        "details": "Hacer 30 minutos de ejercicio",
+        "frequency": 1,
+        "period": "día",
+        "icon": "🏋️‍♂️",
+        "finish": 52,
+        "limitDate": "2030-12-31",
+        "completed": 5
+    },
+    {
+        "id": 5,
+        "details": "Hacer 30 minutos de yoga",
+        "frequency": 1,
+        "period": "día",
+        "icon": "🧘‍♂️",
+        "finish": 52,
+        "limitDate": "2030-12-31",
+        "completed": 5
+    }
+]

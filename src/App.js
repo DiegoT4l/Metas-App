@@ -1,3 +1,6 @@
+import { useEffect, useContext } from 'react';
+import { Context } from './services/Memory';
+import { requestGoals } from './services/Requests';
 import './App.css';
 import Layout from "./components/Shared/Layout";
 import {Route, Routes} from "react-router-dom";
@@ -7,6 +10,22 @@ import NotFound from "./components/Shared/NotFound";
 import Modal from "./components/Shared/Modal";
 
 function App() {
+
+    const [, dispatch] = useContext(Context);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const goals = await requestGoals(); // Espera la respuesta
+                dispatch({ type: 'LOAD_GOALS', goals });
+            } catch (error) {
+                console.error("Error fetching goals:", error);
+            }
+        };
+
+        fetchData(); // Llama a la función asíncrona
+    }, []);
+
     return (
         <Routes>
             <Route path='/' element={<Layout />}>

@@ -1,0 +1,10 @@
+{
+    "id": 2,
+    "details": "Backend",
+    "frequency": 1,
+    "period": "día",
+    "icon": "📚",
+    "finish": 52,
+    "limitDate": "2030-12-31",
+    "completed": 5
+}
